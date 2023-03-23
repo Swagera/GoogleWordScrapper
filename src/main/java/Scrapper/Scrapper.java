@@ -10,19 +10,20 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class Scrapper {
     private String xpath;
     private List<WebElement> searchPageResults;
-    private List<String> searchLinkText = new ArrayList<>();
+    private final List<String> searchLinkText = new ArrayList<>();
     private WebDriver driver;
-    public Scrapper(String query, int page) throws Exception{
+    public Scrapper(String query, int page, String fileName) throws Exception{
         WebDriverSetup.setupDriver();
         HomePage.goToHomePage();
         HomePage.search(query);
         scrap(page);
 
         ExcelFunctions excel = new ExcelFunctions();
-        excel.saveToExcel(searchLinkText);
+        excel.saveToExcel(searchLinkText, fileName);
         WebDriverSetup.quitDriver();
     }
     public List<String> scrap(int page){

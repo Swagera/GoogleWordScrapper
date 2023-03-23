@@ -6,10 +6,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class GoogleWordScrapperGUI extends JFrame implements ActionListener {
-    private JLabel queryLabel, pageLabel, directoryLabel;
-    private JTextField queryField, pageField, directoryField;
-    private JButton saveButton;
+    private final JLabel queryLabel, pageLabel, fileNameLabel;
+    private final JTextField queryField, pageField, fileNameField;
+    private final JButton saveButton;
 
     public GoogleWordScrapperGUI() {
         setTitle("Google Word Scraper");
@@ -18,11 +19,11 @@ public class GoogleWordScrapperGUI extends JFrame implements ActionListener {
 
         queryLabel = new JLabel("Search Query:");
         pageLabel = new JLabel("Number of Pages:");
-        directoryLabel = new JLabel("Save Directory:");
+        fileNameLabel = new JLabel("File Name:");
 
         queryField = new JTextField(20);
         pageField = new JTextField(5);
-        directoryField = new JTextField(20);
+        fileNameField = new JTextField(20);
 
 
         saveButton = new JButton("Save to Excel");
@@ -39,15 +40,16 @@ public class GoogleWordScrapperGUI extends JFrame implements ActionListener {
         pagePanel.add(pageLabel);
         pagePanel.add(pageField);
 
-        JPanel directoryPanel = new JPanel();
-        directoryPanel.add(directoryLabel);
-        directoryPanel.add(directoryField);
+        JPanel fileNamePanel = new JPanel();
+        fileNamePanel.add(fileNameLabel);
+        fileNamePanel.add(fileNameField);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(saveButton);
 
         panel.add(queryPanel);
         panel.add(pagePanel);
+        panel.add(fileNamePanel);
         panel.add(buttonPanel);
 
         add(panel);
@@ -57,12 +59,14 @@ public class GoogleWordScrapperGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveButton) {
             String query = queryField.getText();
+            String fileName = fileNameField.getText();
             int page = Integer.parseInt(pageField.getText());
             try {
-            new Scrapper(query, page);
+            new Scrapper(query, page, fileName);
+            //TODO: Better Exception Handling
                 JOptionPane.showMessageDialog(this, "Excel file saved successfully!");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "An error occurred: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "An error occurred: Invalid file name");
             }
         }
     }
