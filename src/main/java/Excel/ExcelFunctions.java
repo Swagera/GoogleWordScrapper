@@ -1,5 +1,6 @@
 package Excel;
 
+import Validation.Validation;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -10,9 +11,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
-public class ExcelFunctions {
+public class ExcelFunctions extends Validation {
 
-    public void saveToExcel(List<String> list) throws Exception {
+    public void saveToExcel(List<String> list, String fileName) throws Exception {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet();
         int rowIndex = 0;
@@ -24,7 +25,11 @@ public class ExcelFunctions {
             textValue = row.createCell(0);
             textValue.setCellValue(text);
         }
-        FileOutputStream outputStream = new FileOutputStream(new File("output//excel.xlsx"));
-        workbook.write(outputStream);
+        if (!isValidFileName(fileName)) {
+            FileOutputStream outputStream = new FileOutputStream(new File("output//" + fileName + ".xlsx"));
+            workbook.write(outputStream);
+        } else {
+            throw new IllegalArgumentException("File name is invalid");
+        }
     }
 }
