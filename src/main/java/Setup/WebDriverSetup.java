@@ -1,16 +1,20 @@
 package Setup;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class WebDriverSetup {
     private static WebDriver driver;
     public static void setupDriver() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--headless");
+//        options.addArguments("--headless");
         driver = new ChromeDriver(options);
     }
 
