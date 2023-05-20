@@ -30,7 +30,7 @@ public class ExcelFunctions extends Validation {
 
         }
 
-        FileOutputStream outputStream = new FileOutputStream(new File("C:\\Users\\48500\\Desktop\\Projekty\\GoogleWordScrapper\\output\\" + fileName + ".xlsx"));
+        FileOutputStream outputStream = new FileOutputStream(new File("C:\\Users\\48500\\Desktop\\Projekty\\BookingScrapper\\output\\" + fileName + ".xlsx"));
         workbook.write(outputStream);
         outputStream.close();
     }

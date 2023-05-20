@@ -6,14 +6,11 @@ import Setup.WebDriverSetup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Duration;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class Scrapper {
@@ -21,10 +18,13 @@ public class Scrapper {
     private List<WebElement> searchPageResults;
     List<String> hotelNames = new ArrayList<>();
     private WebDriver driver;
-    public Scrapper(String location, String from, String to, String monthFrom, String monthTo, int page, String fileName) throws Exception{
+    public Scrapper(String location, String from, String to, String monthFrom, String monthTo, String yearFrom, String yearTo, int page, String fileName) throws Exception{
+        String monthAndYearFrom = monthFrom + " " + yearFrom;
+        String monthAndYearTo = monthTo + " " + yearTo;
+
         WebDriverSetup.setupDriver();
         HomePage.goToHomePage();
-        HomePage.search(location, from, to, monthFrom, monthTo);
+        HomePage.search(location, from, to, monthAndYearFrom, monthAndYearTo);
         scrap(page);
 
         ExcelFunctions excel = new ExcelFunctions();
