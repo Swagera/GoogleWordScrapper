@@ -18,6 +18,7 @@ public class Validation {
         boolean isYearToValid = isValidYear(yearTo);
         boolean isDateFromValid = isValidDate(dayFrom, monthFrom, yearFrom);
         boolean isDateToValid = isValidDate(dayTo, monthTo, yearTo);
+        boolean isDateFromToValid = isDateFromToValid(dayFrom, monthFrom, yearFrom, dayTo, monthTo, yearTo);
 
         if (!isMonthFromValid) {
             JOptionPane.showMessageDialog(null, "Invalid month value for 'Month From' field");
@@ -49,6 +50,10 @@ public class Validation {
         }
         if (!isDateToValid) {
             JOptionPane.showMessageDialog(null, "You cannot choose date from the past");
+            return false;
+        }
+        if (!isDateFromToValid) {
+            JOptionPane.showMessageDialog(null, "Check in date cannot be after check out date");
             return false;
         }
         return true;
@@ -112,6 +117,20 @@ public class Validation {
         int currentYear = currentDate.getYear();
 
         if (dayInt >= currentDay && monthInt >= currentMonth && yearInt >= currentYear){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static boolean isDateFromToValid(String dayFrom, String monthFrom, String yearFrom, String dayTo, String monthTo, String yearTo){
+        int dayIntFrom = Integer.parseInt(dayFrom);
+        int monthIntFrom = getMonth(monthFrom);
+        int yearIntFrom = Integer.parseInt(yearFrom);
+        int dayIntTo = Integer.parseInt(dayTo);
+        int monthIntTo = getMonth(monthTo);
+        int yearIntTo = Integer.parseInt(yearTo);
+
+        if (dayIntFrom <= dayIntTo && monthIntFrom <= monthIntTo && yearIntFrom <= yearIntTo){
             return true;
         } else {
             return false;
