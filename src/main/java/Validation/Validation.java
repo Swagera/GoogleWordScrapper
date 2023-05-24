@@ -1,5 +1,7 @@
 package Validation;
 
+import net.sf.cglib.core.Local;
+
 import javax.swing.*;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -111,16 +113,10 @@ public class Validation {
         int monthInt = getMonth(month);
         int yearInt = Integer.parseInt(year);
         LocalDate currentDate = LocalDate.now();
+        LocalDate comparisonDate = LocalDate.of(yearInt, monthInt, dayInt);
 
-        int currentDay = currentDate.getDayOfMonth();
-        int currentMonth = currentDate.getMonthValue();
-        int currentYear = currentDate.getYear();
+        return comparisonDate.isAfter(currentDate) || comparisonDate.isEqual(currentDate);
 
-        if (dayInt >= currentDay && monthInt >= currentMonth && yearInt >= currentYear){
-            return true;
-        } else {
-            return false;
-        }
     }
     public static boolean isDateFromToValid(String dayFrom, String monthFrom, String yearFrom, String dayTo, String monthTo, String yearTo){
         int dayIntFrom = Integer.parseInt(dayFrom);
@@ -130,57 +126,25 @@ public class Validation {
         int monthIntTo = getMonth(monthTo);
         int yearIntTo = Integer.parseInt(yearTo);
 
-        if (dayIntFrom <= dayIntTo && monthIntFrom <= monthIntTo && yearIntFrom <= yearIntTo){
-            return true;
-        } else {
-            return false;
-        }
+        return dayIntFrom <= dayIntTo && monthIntFrom <= monthIntTo && yearIntFrom <= yearIntTo;
     }
     public static int getMonth(String month) {
-        int monthInt;
+        return switch (month.toLowerCase()) {
+            case "styczeń" -> 1;
+            case "luty" -> 2;
+            case "marzec" -> 3;
+            case "kwiecień" -> 4;
+            case "maj" -> 5;
+            case "czerwiec" -> 6;
+            case "lipiec" -> 7;
+            case "sierpień" -> 8;
+            case "wrzesień" -> 9;
+            case "październik" -> 10;
+            case "listopad" -> 11;
+            case "grudzień" -> 12;
+            default -> -1;
+        };
 
-        switch (month.toLowerCase()) {
-            case "styczeń":
-                monthInt = 1;
-                break;
-            case "luty":
-                monthInt = 2;
-                break;
-            case "marzec":
-                monthInt = 3;
-                break;
-            case "kwiecień":
-                monthInt = 4;
-                break;
-            case "maj":
-                monthInt = 5;
-                break;
-            case "czerwiec":
-                monthInt = 6;
-                break;
-            case "lipiec":
-                monthInt = 7;
-                break;
-            case "sierpień":
-                monthInt = 8;
-                break;
-            case "wrzesień":
-                monthInt = 9;
-                break;
-            case "październik":
-                monthInt = 10;
-                break;
-            case "listopad":
-                monthInt = 11;
-                break;
-            case "grudzień":
-                monthInt = 12;
-                break;
-            default:
-                monthInt = -1;
-                break;
-        }
-        return monthInt;
     }
 
 }
