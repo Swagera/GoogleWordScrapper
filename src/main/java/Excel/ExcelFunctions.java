@@ -14,7 +14,7 @@ import java.util.*;
 
 public class ExcelFunctions extends Validation {
 
-    public void saveToExcel(List<String> hotelNames, List<Integer> hotelReviewsCount,List<String> hotelRate, String fileName) throws Exception {
+    public void saveToExcel(List<String> hotelNames, List<String> hotelReviewsCount,List<String> hotelRate, List<String> hotelPrice, List<String> isBreakfast, String fileName) throws Exception {
         if (!isValidFileName(fileName)) {
             throw new IllegalArgumentException("File name is invalid");
         }
@@ -33,24 +33,32 @@ public class ExcelFunctions extends Validation {
         Cell headerRate = headerRow.createCell(2);
         headerRate.setCellValue("Rate");
 
+        Cell headerPrice = headerRow.createCell(3);
+        headerPrice.setCellValue("Price");
 
-            int maxSize = Math.max(hotelNames.size(), Math.max(hotelReviewsCount.size(), hotelRate.size()));
-            for (int i = 0; i < maxSize; i++) {
-                Row row = sheet.createRow(rowIndex++);
-                Cell cellName = row.createCell(0);
-                cellName.setCellValue(i < hotelNames.size() ? hotelNames.get(i) : "");
+        Cell headerBreakfast = headerRow.createCell(4);
+        headerBreakfast.setCellValue("isBreakfast");
 
-                Cell cellCount = row.createCell(1);
-                if (i < hotelReviewsCount.size()) {
-                    Integer reviewsCount = hotelReviewsCount.get(i);
-                    cellCount.setCellValue(reviewsCount != null ? String.valueOf(reviewsCount) : "");
-                } else {
-                    cellCount.setCellValue("");
-                }
 
-                Cell cellRate = row.createCell(2);
-                cellRate.setCellValue(i < hotelRate.size() ? hotelRate.get(i) : "");
-            }
+        int size = hotelNames.size();
+
+        for (int i = 0; i < size; i++) {
+            Row row = sheet.createRow(rowIndex++);
+            Cell cellName = row.createCell(0);
+            cellName.setCellValue(hotelNames.get(i));
+
+            Cell cellCount = row.createCell(1);
+            cellCount.setCellValue(hotelReviewsCount.get(i));
+
+            Cell cellRate = row.createCell(2);
+            cellRate.setCellValue(hotelRate.get(i));
+
+            Cell cellPrice = row.createCell(3);
+            cellPrice.setCellValue(hotelPrice.get(i));
+
+            Cell cellBreakfast = row.createCell(4);
+            cellBreakfast.setCellValue(isBreakfast.get(i));
+        }
 
         FileOutputStream outputStream = new FileOutputStream("C:\\Users\\48500\\Desktop\\Projekty\\BookingScrapper\\output\\" + fileName + ".xlsx");
         workbook.write(outputStream);

@@ -22,7 +22,7 @@ public class Scrapper {
         scrapperMethods.scrap(page);
 
         ExcelFunctions excel = new ExcelFunctions();
-        excel.saveToExcel(scrapperMethods.getHotelNames(), scrapperMethods.getHotelReviewsCount(), scrapperMethods.getHotelRate(), fileName);
+        excel.saveToExcel(scrapperMethods.getHotelNames(), scrapperMethods.getHotelReviewsCount(), scrapperMethods.getHotelRate(), scrapperMethods.getHotelPrice(), scrapperMethods.isBreakfastIncluded(), fileName);
         WebDriverSetup.quitDriver();
     }
 }
