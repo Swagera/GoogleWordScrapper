@@ -1,15 +1,15 @@
 package Scrapper.ScrapperMethods;
 
 import Setup.WebDriverSetup;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ScrapperMethods {
     private String xpathPage;
@@ -37,10 +37,20 @@ public class ScrapperMethods {
     public List<WebElement> getPropertyCards() {
         return driver.findElements(By.xpath("//div[@class='a826ba81c4 fa2f36ad22 afd256fc79 d08f526e0d ed11e24d01 ef9845d4b3 da89aeb942']"));
     }
-    public void scrap(int page) throws InterruptedException {
+    public void scrap(int page) {
         driver = WebDriverSetup.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        Thread.sleep(2000);
+        FluentWait fluentWait = new FluentWait<>(driver);
+        fluentWait.withTimeout(5, TimeUnit.SECONDS).pollingEvery(250, TimeUnit.MILLISECONDS);
+        try{
+            WebElement popUpWindowClose = driver.findElement(By.xpath("//button[@class='fc63351294 a822bdf511 e3c025e003 fa565176a8 f7db01295e c334e6f658 ae1678b153']"));
+            fluentWait.until(ExpectedConditions.elementToBeClickable(popUpWindowClose));
+            Actions actions = new Actions(driver);
+            actions.moveToElement(popUpWindowClose).perform();
+            actions.click(popUpWindowClose).perform();
+        } catch (NoSuchElementException e) {
+            //We do nothing here to ensure that the code continues to execute
+        }
         for (int i = 1; i <= page; i++) {
             if (i > 1) {
                 xpathPage = "//*[@class='fc63351294 f9c5690c58' and text()=" + i + "]";
