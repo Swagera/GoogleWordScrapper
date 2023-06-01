@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class BookingScrapperGUI extends JFrame implements ActionListener {
-    private  JLabel titleLabel, queryLabel, pageLabel, fileNameLabel, dayFromLabel, dayToLabel, monthFromLabel, monthToLabel, yearFromLabel, yearToLabel;
-    private JTextField queryField, pageField, fileNameField, dayFromField, dayToField, monthFromField, monthToField, yearFromField, yearToField;
+    private final JLabel titleLabel, queryLabel, pageLabel, fileNameLabel, dayFromLabel, dayToLabel, monthFromLabel, monthToLabel, yearFromLabel, yearToLabel;
+    private final JTextField queryField, pageField, fileNameField, dayFromField, dayToField, monthFromField, monthToField, yearFromField, yearToField;
     private final JButton saveButton;
 
     public BookingScrapperGUI() {

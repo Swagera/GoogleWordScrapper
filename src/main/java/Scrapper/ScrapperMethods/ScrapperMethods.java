@@ -16,11 +16,11 @@ public class ScrapperMethods {
     private List<WebElement> propertyCards;
     private WebDriver driver;
 
-    private List<String> hotelNames = new ArrayList<>();
-    private List<String> hotelReviewsCount = new ArrayList<>();
-    private List<String> hotelRate = new ArrayList<>();
-    private List<String> hotelPrice = new ArrayList<>();
-    private List<String> isBreakfast = new ArrayList<>();
+    private final List<String> hotelNames = new ArrayList<>();
+    private final List<String> hotelReviewsCount = new ArrayList<>();
+    private final List<String> hotelRate = new ArrayList<>();
+    private final List<String> hotelPrice = new ArrayList<>();
+    private final List<String> isBreakfast = new ArrayList<>();
 
     public List<String> getHotelPrice() {
         return hotelPrice;
@@ -40,11 +40,12 @@ public class ScrapperMethods {
     public void scrap(int page) {
         driver = WebDriverSetup.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        FluentWait fluentWait = new FluentWait<>(driver);
-        fluentWait.withTimeout(5, TimeUnit.SECONDS).pollingEvery(250, TimeUnit.MILLISECONDS);
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(driver);
         try{
             WebElement popUpWindowClose = driver.findElement(By.xpath("//button[@class='fc63351294 a822bdf511 e3c025e003 fa565176a8 f7db01295e c334e6f658 ae1678b153']"));
-            fluentWait.until(ExpectedConditions.elementToBeClickable(popUpWindowClose));
+            fluentWait.withTimeout(5, TimeUnit.SECONDS)
+                    .pollingEvery(250, TimeUnit.MILLISECONDS)
+                    .until(ExpectedConditions.elementToBeClickable(popUpWindowClose));
             Actions actions = new Actions(driver);
             actions.moveToElement(popUpWindowClose).perform();
             actions.click(popUpWindowClose).perform();
