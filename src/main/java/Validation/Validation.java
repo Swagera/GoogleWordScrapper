@@ -65,10 +65,9 @@ public class Validation {
         return FILE_NAME_PATTERN.matcher(fileName).matches();
     }
     private static boolean isValidMonth(String month) {
-        String lowercaseMonth = month.toLowerCase();
-        String[] validMonths = {"styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"};
+        String[] validMonths = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
         for (String validMonth : validMonths) {
-            if (lowercaseMonth.equals(validMonth)) {
+            if (month.equals(validMonth)) {
                 return true;
             }
         }
@@ -76,15 +75,14 @@ public class Validation {
     }
     private static boolean isValidDay(String month, String value) {
         int maxDays = 31;
-        String lowercaseMonth = month.toLowerCase();
 
         if (isValidMonth(month)) {
-            String[] monthsWith30Days = {"april", "june", "september", "november", "kwiecień", "czerwiec", "wrzesień", "listopad"};
-            String[] monthsWith28Days = {"february", "luty"};
+            String[] monthsWith30Days = {"4", "6", "9", "11"};
+            String[] monthsWith28Days = {"2"};
 
-            if (Arrays.asList(monthsWith30Days).contains(lowercaseMonth)) {
+            if (Arrays.asList(monthsWith30Days).contains(month)) {
                 maxDays = 30;
-            } else if (Arrays.asList(monthsWith28Days).contains(lowercaseMonth)) {
+            } else if (Arrays.asList(monthsWith28Days).contains(month)) {
                 maxDays = 28;
             }
         }
@@ -110,7 +108,7 @@ public class Validation {
 
     public static boolean isValidDate(String day, String month, String year){
         int dayInt = Integer.parseInt(day);
-        int monthInt = getMonth(month);
+        int monthInt = Integer.parseInt(month);
         int yearInt = Integer.parseInt(year);
         LocalDate currentDate = LocalDate.now();
         LocalDate comparisonDate = LocalDate.of(yearInt, monthInt, dayInt);
@@ -120,31 +118,14 @@ public class Validation {
     }
     public static boolean isDateFromToValid(String dayFrom, String monthFrom, String yearFrom, String dayTo, String monthTo, String yearTo){
         int dayIntFrom = Integer.parseInt(dayFrom);
-        int monthIntFrom = getMonth(monthFrom);
+        int monthIntFrom = Integer.parseInt(monthFrom);
         int yearIntFrom = Integer.parseInt(yearFrom);
         int dayIntTo = Integer.parseInt(dayTo);
-        int monthIntTo = getMonth(monthTo);
+        int monthIntTo = Integer.parseInt(monthTo);
         int yearIntTo = Integer.parseInt(yearTo);
+        LocalDate comparisonDateFrom = LocalDate.of(yearIntFrom, monthIntFrom, dayIntFrom);
+        LocalDate comparisonDateTo = LocalDate.of(yearIntTo, monthIntTo, dayIntTo);
 
-        return dayIntFrom <= dayIntTo && monthIntFrom <= monthIntTo && yearIntFrom <= yearIntTo;
+        return comparisonDateTo.isAfter(comparisonDateFrom) || comparisonDateTo.isEqual(comparisonDateFrom);
     }
-    public static int getMonth(String month) {
-        return switch (month.toLowerCase()) {
-            case "styczeń" -> 1;
-            case "luty" -> 2;
-            case "marzec" -> 3;
-            case "kwiecień" -> 4;
-            case "maj" -> 5;
-            case "czerwiec" -> 6;
-            case "lipiec" -> 7;
-            case "sierpień" -> 8;
-            case "wrzesień" -> 9;
-            case "październik" -> 10;
-            case "listopad" -> 11;
-            case "grudzień" -> 12;
-            default -> -1;
-        };
-
-    }
-
 }
