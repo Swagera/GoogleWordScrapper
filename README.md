@@ -1,4 +1,4 @@
-# BookingScrapper
+# Booking Scrapper
 
 This is a web scrapping tool that allows you to scrap data from **booking.com** website. Data is saved within the excel file. It also has a GUI interface that allows you to:
 * Choose check-in and check-out dates
@@ -12,15 +12,32 @@ This tool has been created with the use of:
 - &nbsp; ![Gradle](https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white)
 - &nbsp; ![Apache POI](https://img.shields.io/badge/Apache_poi-D22128?style=for-the-badge&logo=Apache&logoColor=white)
 - &nbsp; ![TestNG](https://img.shields.io/badge/TestNG-0769AD?style=for-the-badge&logo=testng&logoColor=white)
+- &nbsp; ![Java Swing](https://img.shields.io/badge/Java_Swing-000000?style=for-the-badge&logo=javaswing&logoColor=white)
 
 ## Getting Started
-
 You can either download the ZIP file and run the BookingScrapper.bat file or clone repository to your IDE.
 
-### Installing
+### Prerequisites
+Java installed
 
+Gradle installed
 
 ### Executing program
+#### Through .bat file
+1. Clone repository
+2. Go to project directory
+3. Double click **BookingScrapper.bat**
+#### Through IDE
+1. Clone repository 
+2. Open project in your IDE (preferably IntelliJ IDEA)
+3. Open terminal (alt+F12 on Windows)
+4. execute `gradle run` command
+
+#### Through Command Prompt
+1. Clone repository
+2. Open Command Prompt
+3. Move to project directory `cd C:\[your path]\BookingScrapper`
+4. execute `gradle run` command
 
 
 ## Bugs to fix
