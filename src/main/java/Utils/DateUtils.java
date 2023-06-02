@@ -2,6 +2,7 @@ package Utils;
 
 import Setup.WebDriverSetup;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,7 +32,10 @@ public class DateUtils {
     }
     public void datePicker(String from, String to, String monthAndYearFrom, String monthAndYearTo) {
         wait = new WebDriverWait(driver, 10);
-       wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[@class='d47738b911 e246f833f7 fe211c0731']")))).click();
+       WebElement calendarButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[@class='d47738b911 e246f833f7 fe211c0731']"))));
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("arguments[0].click();", calendarButton);
+
         if (isMonthValid(monthAndYearFrom)) {
             clickGivenDay(getDatePickerData(), from);
         } else {

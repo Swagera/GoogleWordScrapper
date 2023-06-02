@@ -123,7 +123,9 @@ public class Validation {
         int dayIntTo = Integer.parseInt(dayTo);
         int monthIntTo = Integer.parseInt(monthTo);
         int yearIntTo = Integer.parseInt(yearTo);
+        LocalDate comparisonDateFrom = LocalDate.of(yearIntFrom, monthIntFrom, dayIntFrom);
+        LocalDate comparisonDateTo = LocalDate.of(yearIntTo, monthIntTo, dayIntTo);
 
-        return dayIntFrom <= dayIntTo && monthIntFrom <= monthIntTo && yearIntFrom <= yearIntTo;
+        return comparisonDateTo.isAfter(comparisonDateFrom) || comparisonDateTo.isEqual(comparisonDateFrom);
     }
 }

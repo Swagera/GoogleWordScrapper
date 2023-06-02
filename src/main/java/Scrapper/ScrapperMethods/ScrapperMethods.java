@@ -40,12 +40,12 @@ public class ScrapperMethods {
     public void scrap(int page) {
         driver = WebDriverSetup.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        FluentWait<WebDriver> fluentWait = new FluentWait<>(driver);
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(10, TimeUnit.SECONDS)
+                .pollingEvery(250, TimeUnit.MILLISECONDS)
+                .ignoring(Exception.class);
         try{
-            WebElement popUpWindowClose = driver.findElement(By.xpath("//button[@class='fc63351294 a822bdf511 e3c025e003 fa565176a8 f7db01295e c334e6f658 ae1678b153']"));
-            fluentWait.withTimeout(5, TimeUnit.SECONDS)
-                    .pollingEvery(250, TimeUnit.MILLISECONDS)
-                    .until(ExpectedConditions.elementToBeClickable(popUpWindowClose));
+            WebElement popUpWindowClose = fluentWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='fc63351294 a822bdf511 e3c025e003 fa565176a8 f7db01295e c334e6f658 ae1678b153']")));
             Actions actions = new Actions(driver);
             actions.moveToElement(popUpWindowClose).perform();
             actions.click(popUpWindowClose).perform();
