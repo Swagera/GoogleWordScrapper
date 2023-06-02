@@ -1,6 +1,6 @@
 # BookingScrapper
 
-This is a web scrapping tool that allows you to scrap data from booking.com website. Data is saved within the excel file. It also has a GUI interface that allows you to:
+This is a web scrapping tool that allows you to scrap data from **booking.com** website. Data is saved within the excel file. It also has a GUI interface that allows you to:
 * Choose check-in and check-out dates
 * Choose number of pages you want to scrap data from
 * Choose excel file name
