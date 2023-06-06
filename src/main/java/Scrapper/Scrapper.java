@@ -12,7 +12,7 @@ public class Scrapper {
     ScrapperMethods scrapperMethods;
     DateUtils dateUtils;
 
-    public Scrapper(String location, String from, String to, String monthFrom, String monthTo, String yearFrom, String yearTo, int page, String fileName) throws Exception{
+    public Scrapper(String location, String from, String to, String monthFrom, String monthTo, String yearFrom, String yearTo, String page, String fileName) throws Exception{
         dateUtils = new DateUtils();
         String monthAndYearFrom = dateUtils.getMonthName(monthFrom) + " " + yearFrom;
         String monthAndYearTo = dateUtils.getMonthName(monthTo) + " " + yearTo;

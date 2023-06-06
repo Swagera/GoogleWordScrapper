@@ -37,7 +37,8 @@ public class ScrapperMethods {
     public List<WebElement> getPropertyCards() {
         return driver.findElements(By.xpath("//div[@class='a826ba81c4 fa2f36ad22 afd256fc79 d08f526e0d ed11e24d01 ef9845d4b3 da89aeb942']"));
     }
-    public void scrap(int page) {
+    public void scrap(String page) {
+        int pageInt = Integer.parseInt(page);
         driver = WebDriverSetup.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         FluentWait<WebDriver> fluentWait = new FluentWait<>(driver)
@@ -52,7 +53,7 @@ public class ScrapperMethods {
         } catch (NoSuchElementException e) {
             //We do nothing here to ensure that the code continues to execute
         }
-        for (int i = 1; i <= page; i++) {
+        for (int i = 1; i <= pageInt; i++) {
             if (i > 1) {
                 xpathPage = "//*[@class='fc63351294 f9c5690c58' and text()=" + i + "]";
                 driver.findElement(By.xpath(xpathPage)).click();

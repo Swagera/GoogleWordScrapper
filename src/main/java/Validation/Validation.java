@@ -1,17 +1,20 @@
 package Validation;
 
-import net.sf.cglib.core.Local;
+import GUI.MessageDialog;
 
-import javax.swing.*;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class Validation {
-
     private static final Pattern FILE_NAME_PATTERN = Pattern.compile("[^\\\\/:*?\"<>|]+");
 
-    public static boolean isFormValid(String monthFrom, String monthTo, String dayFrom, String dayTo, String yearFrom, String yearTo) {
+    public static boolean isFormValid(String monthFrom, String monthTo, String dayFrom, String dayTo, String yearFrom, String yearTo, String page) {
+        if (monthFrom.isEmpty() || monthTo.isEmpty() || dayFrom.isEmpty() || dayTo.isEmpty() || yearFrom.isEmpty() || yearTo.isEmpty() || page.isEmpty()) {
+            MessageDialog.showErrorDialog(null, "All fields must be filled");
+            return false;
+        }
+
         boolean isMonthFromValid = isValidMonth(monthFrom);
         boolean isMonthToValid = isValidMonth(monthTo);
         boolean isDayFromValid = isValidDay(monthFrom, dayFrom);
@@ -23,45 +26,49 @@ public class Validation {
         boolean isDateFromToValid = isDateFromToValid(dayFrom, monthFrom, yearFrom, dayTo, monthTo, yearTo);
 
         if (!isMonthFromValid) {
-            JOptionPane.showMessageDialog(null, "Invalid month value for 'Month From' field");
+             MessageDialog.showErrorDialog(null, "Invalid month value for 'Month From' field");
             return false;
         }
         if (!isMonthToValid) {
-            JOptionPane.showMessageDialog(null, "Invalid month value for 'Month To' field");
+            MessageDialog.showErrorDialog(null, "Invalid month value for 'Month To' field");
             return false;
         }
         if (!isDayFromValid) {
-            JOptionPane.showMessageDialog(null, "Invalid day value for 'Day From' field. Please enter a number between 1 and the maximum days of the selected month.");
+            MessageDialog.showErrorDialog(null, "Invalid day value for 'Day From' field. Please enter a number between 1 and the maximum days of the selected month.");
             return false;
         }
         if (!isDayToValid) {
-            JOptionPane.showMessageDialog(null, "Invalid day value for 'Day To' field. Please enter a number between 1 and the maximum days of the selected month.");
+            MessageDialog.showErrorDialog(null, "Invalid day value for 'Day To' field. Please enter a number between 1 and the maximum days of the selected month.");
             return false;
         }
         if (!isYearFromValid) {
-            JOptionPane.showMessageDialog(null, "Invalid year value for 'Year From' field");
+            MessageDialog.showErrorDialog(null, "Invalid year value for 'Year From' field");
             return false;
         }
         if (!isYearToValid) {
-            JOptionPane.showMessageDialog(null, "Invalid year value for 'Year To' field");
+            MessageDialog.showErrorDialog(null, "Invalid year value for 'Year To' field");
             return false;
         }
         if (!isDateFromValid) {
-            JOptionPane.showMessageDialog(null, "You cannot choose date from the past");
+            MessageDialog.showErrorDialog(null, "You cannot choose date from the past");
             return false;
         }
         if (!isDateToValid) {
-            JOptionPane.showMessageDialog(null, "You cannot choose date from the past");
+            MessageDialog.showErrorDialog(null, "You cannot choose date from the past");
             return false;
         }
         if (!isDateFromToValid) {
-            JOptionPane.showMessageDialog(null, "Check in date cannot be after check out date");
+            MessageDialog.showErrorDialog(null, "Check in date cannot be after check out date");
             return false;
         }
         return true;
     }
 
     public static boolean isValidFileName(String fileName) {
+        if (fileName.isEmpty()) {
+            MessageDialog.showErrorDialog(null, "All fields must be filled");
+            return false;
+        }
         return FILE_NAME_PATTERN.matcher(fileName).matches();
     }
     private static boolean isValidMonth(String month) {
@@ -73,7 +80,7 @@ public class Validation {
         }
         return false;
     }
-    private static boolean isValidDay(String month, String value) {
+    private static boolean isValidDay(String month, String day) {
         int maxDays = 31;
 
         if (isValidMonth(month)) {
@@ -88,18 +95,18 @@ public class Validation {
         }
 
         try {
-            int number = Integer.parseInt(value);
+            int number = Integer.parseInt(day);
             return number >= 1 && number <= maxDays;
         } catch (NumberFormatException e) {
             return false;
         }
     }
 
-    private static boolean isValidYear(String value) {
+    private static boolean isValidYear(String year) {
         int min = 2023;
         int max = 2028;
         try {
-            int number = Integer.parseInt(value);
+            int number = Integer.parseInt(year);
             return number >= min && number <= max;
         } catch (NumberFormatException e) {
             return false;
