@@ -4,6 +4,8 @@ import Scrapper.Scrapper;
 import Validation.Validation;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,31 +18,45 @@ public class BookingScrapperGUI extends JFrame implements ActionListener {
 
     public BookingScrapperGUI() {
         setTitle("BookingScrapper");
-        setSize(600, 300);
+        setSize(600, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+        Font customFontPlain = CustomFont.getPlainCustomFont();
+        Font customFontBold = CustomFont.getBoldCustomFont();
+        Font customFontBoldWithSize = CustomFont.getBoldCustomFontSize(22);
+
         titleLabel = new JLabel("BOOKING SCRAPPER");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        titleLabel.setFont(customFontBoldWithSize);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setForeground(Color.WHITE);
 
         queryLabel = new JLabel("Location:");
         queryLabel.setForeground(Color.WHITE);
+        queryLabel.setFont(customFontPlain);
         dayFromLabel = new JLabel("Day:");
+        dayFromLabel.setFont(customFontPlain);
         dayFromLabel.setForeground(Color.WHITE);
         dayToLabel = new JLabel("Day:");
+        dayToLabel.setFont(customFontPlain);
         dayToLabel.setForeground(Color.WHITE);
         monthFromLabel = new JLabel("Month:");
+        monthFromLabel.setFont(customFontPlain);
         monthFromLabel.setForeground(Color.WHITE);
         yearFromLabel = new JLabel("Year:");
+        yearFromLabel.setFont(customFontPlain);
         yearFromLabel.setForeground(Color.WHITE);
         monthToLabel = new JLabel("Month:");
+        monthToLabel.setFont(customFontPlain);
         monthToLabel.setForeground(Color.WHITE);
         yearToLabel = new JLabel("Year:");
+        yearToLabel.setFont(customFontPlain);
         yearToLabel.setForeground(Color.WHITE);
         pageLabel = new JLabel("Number of Pages to scrap:");
+        pageLabel.setFont(customFontPlain);
         pageLabel.setForeground(Color.WHITE);
         fileNameLabel = new JLabel("File Name:");
+        fileNameLabel.setFont(customFontPlain);
         fileNameLabel.setForeground(Color.WHITE);
 
         queryField = new JTextField(20);
@@ -53,8 +69,23 @@ public class BookingScrapperGUI extends JFrame implements ActionListener {
         pageField = new JTextField(5);
         fileNameField = new JTextField(20);
 
+        setYellowRoundBorder(queryField);
+        setYellowRoundBorder(dayFromField);
+        setYellowRoundBorder(dayToField);
+        setYellowRoundBorder(monthFromField);
+        setYellowRoundBorder(monthToField);
+        setYellowRoundBorder(yearFromField);
+        setYellowRoundBorder(yearToField);
+        setYellowRoundBorder(pageField);
+        setYellowRoundBorder(fileNameField);
+
         saveButton = new JButton("Save to Excel");
         saveButton.addActionListener(this);
+        saveButton.setPreferredSize(new Dimension(150, 40));
+        saveButton.setBackground(new Color(0, 108, 228, 255));
+        saveButton.setForeground(Color.WHITE);
+        saveButton.setFont(customFontBold);
+        setYellowRoundBorder(saveButton);
 
         JPanel titlePanel = new JPanel();
         titlePanel.add(titleLabel);
@@ -135,19 +166,31 @@ public class BookingScrapperGUI extends JFrame implements ActionListener {
             String yearFrom = yearFromField.getText().trim();
             String yearTo = yearToField.getText().trim();
             String fileName = fileNameField.getText().trim();
-            int page = Integer.parseInt(pageField.getText().trim());
+            String page = pageField.getText().trim();
 
-            boolean isFormValid = Validation.isFormValid(monthFrom, monthTo, dayFrom, dayTo, yearFrom, yearTo);
+            boolean isFormValid = Validation.isFormValid(monthFrom, monthTo, dayFrom, dayTo, yearFrom, yearTo, page);
 
         if(isFormValid)
             try {
                 new Scrapper(location, dayFrom, dayTo, monthFrom, monthTo, yearFrom, yearTo, page, fileName);
-                JOptionPane.showMessageDialog(this, "Excel file saved successfully!");
+                MessageDialog.showSuccessDialog(this, "Excel file saved successfully!");
                 System.exit(0);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "An error occurred");
+                MessageDialog.showErrorDialog(this, "An error occurred");
                 System.exit(0);
             }
         }
     }
-}
+    private void setYellowRoundBorder(JComponent component) {
+        Color yellowColor = new Color(255, 183, 0, 255);
+        int borderThickness = 3;
+        Font customFont = component.getFont().deriveFont(Font.BOLD, 14);  // Custom font and size
+
+        component.setBorder(null);
+
+        Border yellowBorder = new MatteBorder(borderThickness, borderThickness, borderThickness, borderThickness, yellowColor);
+        component.setBorder(yellowBorder);
+
+        component.setFont(customFont);
+    }
+    }

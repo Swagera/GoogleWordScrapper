@@ -60,7 +60,7 @@ public class ExcelFunctions extends Validation {
             cellBreakfast.setCellValue(isBreakfast.get(i));
         }
 
-        FileOutputStream outputStream = new FileOutputStream("C:\\Users\\48500\\Desktop\\Projekty\\BookingScrapper\\output\\" + fileName + ".xlsx");
+        FileOutputStream outputStream = new FileOutputStream("output/" + fileName + ".xlsx");
         workbook.write(outputStream);
         outputStream.close();
     }
