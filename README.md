@@ -42,7 +42,6 @@ Gradle installed
 
 ## Bugs to fix
 * Possibility of choosing dates that excess 90 days period
-* No validation of chosen number of pages
 * Headless mode throws an error
 
 ## TODO list
