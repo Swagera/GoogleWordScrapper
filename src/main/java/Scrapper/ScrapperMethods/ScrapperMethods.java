@@ -1,5 +1,6 @@
 package Scrapper.ScrapperMethods;
 
+import GUI.MessageDialog;
 import Setup.WebDriverSetup;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -21,6 +22,7 @@ public class ScrapperMethods {
     private final List<String> hotelRate = new ArrayList<>();
     private final List<String> hotelPrice = new ArrayList<>();
     private final List<String> isBreakfast = new ArrayList<>();
+    private final List<String> isCancellationFree = new ArrayList<>();
 
     public List<String> getHotelPrice() {
         return hotelPrice;
@@ -53,7 +55,9 @@ public class ScrapperMethods {
         } catch (NoSuchElementException e) {
             //We do nothing here to ensure that the code continues to execute
         }
-        for (int i = 1; i <= pageInt; i++) {
+        boolean nextPageExists = true;
+        int currentPage = 0;
+        for (int i = 1; i <= pageInt && nextPageExists; i++) {
             if (i > 1) {
                 xpathPage = "//*[@class='fc63351294 f9c5690c58' and text()=" + i + "]";
                 driver.findElement(By.xpath(xpathPage)).click();
@@ -64,6 +68,17 @@ public class ScrapperMethods {
             scrapHotelRate();
             scrapHotelPrice();
             isBreakfastIncluded();
+            isCancellationFree();
+
+            currentPage++;
+            int nextPage = i+1;
+            try {
+                driver.findElement(By.xpath("//*[@class='fc63351294 f9c5690c58' and text()=" + nextPage + "]"));
+            }
+            catch (NoSuchElementException e) {
+                nextPageExists = false;
+                MessageDialog.showInfoDialog(null, "Only " + currentPage + " pages exist. These pages will be scrapped");
+            }
         }
     }
     public List<String> scrapHotelNames() {
@@ -133,5 +148,18 @@ public class ScrapperMethods {
             }
         }
         return isBreakfast;
+    }
+    public List<String> isCancellationFree() {
+
+        propertyCards = getPropertyCards();
+        for (WebElement card : propertyCards) {
+            try {
+                card.findElement(By.xpath(".//div[@class='d506630cf3']"));
+                isCancellationFree.add("Yes");
+            } catch (NoSuchElementException e) {
+                isCancellationFree.add("No");
+            }
+        }
+        return isCancellationFree;
     }
 }

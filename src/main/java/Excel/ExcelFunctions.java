@@ -14,7 +14,8 @@ import java.util.*;
 
 public class ExcelFunctions extends Validation {
 
-    public void saveToExcel(List<String> hotelNames, List<String> hotelReviewsCount,List<String> hotelRate, List<String> hotelPrice, List<String> isBreakfast, String fileName) throws Exception {
+    public void saveToExcel(List<String> hotelNames, List<String> hotelReviewsCount,List<String> hotelRate,
+                            List<String> hotelPrice, List<String> isBreakfast, List<String> isCancellationFree, String fileName) throws Exception {
         if (!isValidFileName(fileName)) {
             throw new IllegalArgumentException("File name is invalid");
         }
@@ -37,7 +38,10 @@ public class ExcelFunctions extends Validation {
         headerPrice.setCellValue("Price");
 
         Cell headerBreakfast = headerRow.createCell(4);
-        headerBreakfast.setCellValue("isBreakfast");
+        headerBreakfast.setCellValue("Breakfast");
+
+        Cell headerCancellation = headerRow.createCell(5);
+        headerCancellation.setCellValue("Free cancellation");
 
 
         int size = hotelNames.size();
@@ -58,6 +62,9 @@ public class ExcelFunctions extends Validation {
 
             Cell cellBreakfast = row.createCell(4);
             cellBreakfast.setCellValue(isBreakfast.get(i));
+
+            Cell cellCancellation = row.createCell(5);
+            cellCancellation.setCellValue(isCancellationFree.get(i));
         }
 
         FileOutputStream outputStream = new FileOutputStream("output/" + fileName + ".xlsx");

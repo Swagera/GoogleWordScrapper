@@ -19,6 +19,21 @@ public class MessageDialog {
         UIManager.put("Panel.background", null);
         UIManager.put("OptionPane.messageForeground", null);
     }
+    public static void showInfoDialog(Component parentComponent, String message) {
+        UIManager.put("OptionPane.background", new Color(0, 53, 128));
+        UIManager.put("Panel.background", new Color(0, 53, 128));
+        UIManager.put("OptionPane.messageForeground", Color.WHITE);
+        UIManager.put("OptionPane.messageFont", CustomFont.getPlainCustomFont());
+        UIManager.put("Button.background", new Color(0, 108, 228, 255));
+        UIManager.put("Button.foreground", Color.WHITE);
+        UIManager.put("Button.font", CustomFont.getPlainCustomFont().deriveFont(Font.BOLD, 14));
+
+        JOptionPane.showMessageDialog(parentComponent, message, "Info", JOptionPane.INFORMATION_MESSAGE);
+
+        UIManager.put("OptionPane.background", null);
+        UIManager.put("Panel.background", null);
+        UIManager.put("OptionPane.messageForeground", null);
+    }
     public static void showSuccessDialog(Component parentComponent, String message) {
         UIManager.put("OptionPane.background", new Color(0, 53, 128));
         UIManager.put("Panel.background", new Color(0, 53, 128));

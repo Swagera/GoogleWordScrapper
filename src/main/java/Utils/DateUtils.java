@@ -15,15 +15,15 @@ public class DateUtils {
     private final WebDriver driver = WebDriverSetup.getDriver();
     public String getMonthName(String monthNumber) {
         return switch (monthNumber) {
-            case "1" -> "january";
-            case "2" -> "february";
-            case "3" -> "march";
-            case "4" -> "april";
-            case "5" -> "may";
-            case "6" -> "june";
-            case "7" -> "july";
-            case "8" -> "august";
-            case "9" -> "september";
+            case "01" -> "january";
+            case "02" -> "february";
+            case "03" -> "march";
+            case "04" -> "april";
+            case "05" -> "may";
+            case "06" -> "june";
+            case "07" -> "july";
+            case "08" -> "august";
+            case "09" -> "september";
             case "10" -> "october";
             case "11" -> "november";
             case "12" -> "december";
@@ -66,12 +66,11 @@ public class DateUtils {
                 driver.findElement(By.xpath("//h3[@class='ac78a73c96 ab0d1629e5']")).click();
             }
         }
-        return validMonth;
+        return true;
     }
     public List<WebElement> getDatePickerData(){
         WebElement dateWidgetFrom = wait.until(
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("aadb8ed6d3"))).get(0);
-        List<WebElement> columns = dateWidgetFrom.findElements(By.tagName("td"));
-        return columns;
+        return dateWidgetFrom.findElements(By.tagName("td"));
     }
 }

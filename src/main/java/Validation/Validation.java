@@ -72,7 +72,7 @@ public class Validation {
         return FILE_NAME_PATTERN.matcher(fileName).matches();
     }
     private static boolean isValidMonth(String month) {
-        String[] validMonths = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        String[] validMonths = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
         for (String validMonth : validMonths) {
             if (month.equals(validMonth)) {
                 return true;
@@ -84,8 +84,8 @@ public class Validation {
         int maxDays = 31;
 
         if (isValidMonth(month)) {
-            String[] monthsWith30Days = {"4", "6", "9", "11"};
-            String[] monthsWith28Days = {"2"};
+            String[] monthsWith30Days = {"04", "06", "09", "011"};
+            String[] monthsWith28Days = {"02"};
 
             if (Arrays.asList(monthsWith30Days).contains(month)) {
                 maxDays = 30;
