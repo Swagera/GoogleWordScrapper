@@ -1,7 +1,10 @@
 package GUI;
 
 import Scrapper.Scrapper;
+import Setup.WebDriverSetup;
+import Utils.ScreenshotUtil;
 import Validation.Validation;
+import org.openqa.selenium.WebDriver;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -176,6 +179,8 @@ public class BookingScrapperGUI extends JFrame implements ActionListener {
                 MessageDialog.showSuccessDialog(this, "Excel file saved successfully!");
                 System.exit(0);
             } catch (Exception ex) {
+                WebDriver driver = WebDriverSetup.getDriver();
+                ScreenshotUtil.captureScreenshot(driver);
                 MessageDialog.showErrorDialog(this, "An error occurred");
                 System.exit(0);
             }
